@@ -34,7 +34,7 @@ class  Live extends React.Component {
         return ( 
             <div>
                 <h2>Live Odds</h2>
-                {this.state.odds.map(event => <div><h2><Event data={event} /></h2></div>)}
+                {this.state.odds.map(event => <Event data={event} />)}
             </div>
          );
     }
