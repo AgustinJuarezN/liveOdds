@@ -2,9 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import Event from './event'
 
-const CATEGORY_CODES = '2855630';
-const URL = 'https://sportsfeeds.bodog.eu';
-
 class  Live extends React.Component {
     constructor(props) {
         super(props);
