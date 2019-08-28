@@ -20,9 +20,10 @@ class  Live extends React.Component {
     }
 
     componentDidMount() {
+        this.reLoadOdds();
         this.intervalID = setInterval(
           () => this.reLoadOdds(),
-          2000
+          60000
         );
       }
 
@@ -34,7 +35,7 @@ class  Live extends React.Component {
         return ( 
             <div>
                 <h2>Live Odds</h2>
-                {this.state.odds.map(event => <Event data={event} />)}
+                {this.state.odds.map(event => <div key={event.id}><Event data={event} /></div>)}
             </div>
          );
     }
