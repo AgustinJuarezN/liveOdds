@@ -3,41 +3,29 @@ import equal from 'fast-deep-equal'
 
 class Event extends React.Component {
     constructor(props) {
+
         super(props);
+
         this.state = {
-            data: this.props.data, 
-            outcomes:{},
-            odds:[],
             homeOdds:'',
             awayOdds:'',
             drawOdds:''
          }
 
-         this.convertToOdds = this.convertToOdds.bind(this);
          this.odds = this.odds.bind(this);
-         this.updateData = this.updateData.bind(this);
     }
 
-    convertToOdds() {
-        this.setState({
-            outcomes: this.props.data.markets.filter(m => m.code === '3W-1X2')[0].outcomes
-        },
-        () => {
-            this.odds(this.state);
-        })
-    }
-
-    odds(state) {
+    odds() {
 
         let o = "";
         let c = "";
         let d = "";
-        let  r = "";
+        let r = "";
         let n = "";
         let s = "";
         let p = "";
 
-        let e = state.outcomes;
+        let e = this.props.data.markets.filter(m => m.code === '3W-1X2')[0].outcomes;
         o = e[0].price.decimal;
         c = e[1].price.decimal; 
         d = e[2].price.decimal;
@@ -51,45 +39,53 @@ class Event extends React.Component {
             awayOdds: parseFloat(c).toFixed(2),
             drawOdds: parseFloat(d).toFixed(2)
         })
+
     }
 
     componentDidMount() {
-        this.updateData();
-        this.convertToOdds();
+        this.odds();
     }
 
     componentDidUpdate(prevProps) {
         if(!equal(this.props.data, prevProps.data))
         {
-          this.updateData();
+            this.odds();
+            console.log('props changed');
+            animate('add');
         }
-      } 
-
-    updateData() {
-        this.setState({
-            data: this.props.data
-        })
-        console.log('cambio');
-    }
+    } 
 
     render() { 
         return ( 
             <div>
                 <div className="matcheFlex">
                     <div className="matcheContent">
-                        <div>{this.state.data.competitors[0].description }</div>
+                        <div>{this.props.data.competitors[0].description }</div>
                         <div>X</div>
-                        <div>{this.state.data.competitors[1].description}</div>
-                    </div>
-                    <div className="matcheContent">
-                        <div>{this.state.homeOdds}<b>%</b></div>
-                        <div>{this.state.drawOdds}<b>%</b></div>
-                        <div>{this.state.awayOdds}<b>%</b></div>
+                        <div>{this.props.data.competitors[1].description}</div>
+                    </div> 
+                    <div className="matcheContent" id="odds">
+                        <div className="odds">{this.state.homeOdds}<b>%</b></div>
+                        <div className="odds">{this.state.drawOdds}<b>%</b></div>
+                        <div className="odds">{this.state.awayOdds}<b>%</b></div>
                     </div>
                 </div>
             </div>
          );
     }
+}
+
+function animate(option) {
+    var element = document.getElementById("odds");
+    if(option === 'add') {
+        element.classList.add("animate");
+    }else if(option === 'remove'){
+        element.classList.remove("animate");
+    }
+
+    if(option !== 'remove') {
+        setInterval(animate('remove'),5000);
+    }        
 }
 
 export default Event;
