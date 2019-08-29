@@ -2,6 +2,7 @@ import React from 'react';
 import equal from 'fast-deep-equal'
 
 class Event extends React.Component {
+    
     constructor(props) {
 
         super(props);
@@ -51,7 +52,7 @@ class Event extends React.Component {
         {
             this.odds();
             console.log('props changed');
-            animate('add');
+            animate();
         }
     } 
 
@@ -75,17 +76,15 @@ class Event extends React.Component {
     }
 }
 
-function animate(option) {
-    var element = document.getElementById("odds");
-    if(option === 'add') {
-        element.classList.add("animate");
-    }else if(option === 'remove'){
-        element.classList.remove("animate");
-    }
+function animate() {
+    var element = document.getElementById("odds"); 
+    element.classList.add("animate");
+    setInterval(removeAnimate,5000);
+}
 
-    if(option !== 'remove') {
-        setInterval(animate('remove'),5000);
-    }        
+function removeAnimate() {
+    var element = document.getElementById("odds"); 
+    element.classList.remove("animate");
 }
 
 export default Event;
