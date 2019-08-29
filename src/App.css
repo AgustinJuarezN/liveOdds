@@ -8,6 +8,10 @@
   pointer-events: none;
 }
 
+.animate {
+  animation: changeOdds 2s 0s 5 alternate backwards;
+}
+
 .App-header {
   background-color: white;
   min-height: 100vh;
@@ -30,6 +34,7 @@
   flex-direction: column;
   background-color: white;
   min-width: 200px;
+  padding:20px;
 }
 
 .matcheFlex .matcheContent {
@@ -79,4 +84,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+@keyframes changeOdds {
+    0% { color: white;}
+    50% { color: red;}
+    100% { color: black;}
 }
